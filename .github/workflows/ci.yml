@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    container: python:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "This job tests something"
+
+  test-job2:
+    runs-on: ubuntu-latest
+    container: python:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "This job tests another thing"
