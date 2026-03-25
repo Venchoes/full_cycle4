@@ -7,16 +7,12 @@ on:
     branches: [ main ]
 
 jobs:
-  test-job:
+  test:
     runs-on: ubuntu-latest
     container: python:latest
     steps:
       - uses: actions/checkout@v3
-      - run: echo "This job tests something"
-
-  test-job2:
-    runs-on: ubuntu-latest
-    container: python:latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: echo "This job tests another thing"
+      - name: Install dependencies
+        run: pip install flask
+      - name: Run unit tests
+        run: python -m unittest -v tests/appTest.py
