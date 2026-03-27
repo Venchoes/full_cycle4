@@ -42,3 +42,32 @@ jobs:
           echo "Implantando a branch ${{ github.ref_name }} em produção..."
           sleep 20
           echo "Implantação concluída com sucesso!"
+
+  semgrep-sast:
+    runs-on: ubuntu-latest
+    container: python:latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Semgrep SAST
+        run: |
+          pip install semgrep
+          semgrep --json --config=p/security-audit > gl-sast-report.json || true
+      - name: Upload SAST Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: sast-report
+          path: gl-sast-report.json
+
+  check-sast-report:
+    runs-on: ubuntu-latest
+    container: python:latest
+    needs: semgrep-sast
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download SAST Report
+        uses: actions/download-artifact@v3
+        with:
+          name: sast-report
+      - name: Validate SAST Report
+        run: python3 validate_sast.py
