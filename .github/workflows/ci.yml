@@ -24,3 +24,9 @@ jobs:
     steps:
       - name: Display test message
         run: echo "Additional test stage - test-job2 completed successfully!"
+
+  build-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build message
+        run: echo "Olá, ${{ github.actor }}!"
