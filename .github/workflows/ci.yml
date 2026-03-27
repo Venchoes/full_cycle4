@@ -18,3 +18,9 @@ jobs:
         run: coverage run -m unittest tests/appTest.py
       - name: Display coverage report
         run: coverage report
+
+  test-job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display test message
+        run: echo "Additional test stage - test-job2 completed successfully!"
